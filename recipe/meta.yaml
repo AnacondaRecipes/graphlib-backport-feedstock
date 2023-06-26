@@ -11,29 +11,35 @@ source:
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv --use-deprecated=out-of-tree-build
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
+  skip: True  # [py<37]
 
 requirements:
   host:
     - pip
-    - python >=3.6,<4.0
-    - poetry
+    - python
+    - poetry 1.4.0
+    - setuptools
+    - wheel
   run:
-    - python >=3.6,<4.0
+    - python
 
 test:
   imports:
     - graphlib
-  commands:
-    - pip check
   requires:
     - pip
+  commands:
+    - pip check
 
 about:
   home: https://pypi.org/project/graphlib-backport/
+  dev_url: https://github.com/mariushelf/graphlib_backport
+  doc_url: https://github.com/mariushelf/graphlib_backport
   summary: Backport of the Python 3.9 graphlib module for Python 3.6+
+  description: Backport of the Python 3.9 graphlib module for older Python versions.
   license: PSF-2.0
+  license_family: PSF
   license_file: LICENSE
 
 extra:
